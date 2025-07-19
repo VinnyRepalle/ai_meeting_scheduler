@@ -1,0 +1,174 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Schedule a Meeting</title>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <style>
+        body {
+            background-color: #f8f9fa;
+        }
+
+        .form-container {
+            max-width: 750px;
+            margin: 50px auto;
+            background: #ffffff;
+            padding: 30px;
+            border-radius: 8px;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        h1 {
+            font-size: 26px;
+            margin-bottom: 25px;
+            color: #333;
+        }
+
+        .helptext {
+            font-size: 13px;
+            color: #777;
+            margin-top: 4px;
+            display: block;
+        }
+
+        .form-label {
+            font-weight: 500;
+            color: #495057;
+        }
+
+        .datetime-line {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            margin-bottom: 8px;
+        }
+
+        .datetime-label {
+            font-weight: 500;
+            font-size: 15px;
+            min-width: 40px;
+            color: #495057;
+        }
+
+        .datetime-hint {
+            color: #0d6efd;
+            font-size: 14px;
+            margin-left: 5px;
+        }
+
+        .datetime-icon {
+            font-size: 18px;
+            margin-left: 5px;
+        }
+
+        .datetime-input {
+            width: 150px !important;
+        }
+
+        .btn-primary {
+            margin-top: 25px;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="form-container">
+            <h1>Schedule a Meeting</h1>
+            <form method="post">
+                {% csrf_token %}
+
+                <div class="mb-3">
+                    <label class="form-label">Title</label>
+                    {{ form.title }}
+                    {{ form.title.errors }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Description</label>
+                    {{ form.description }}
+                    {{ form.description.errors }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Host Email</label>
+                    {{ form.host_email }}
+                    {{ form.host_email.errors }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Participant Emails</label>
+                    {{ form.participant_emails }}
+                    {{ form.participant_emails.errors }}
+                    {% if form.participant_emails.help_text %}
+                        <span class="helptext">{{ form.participant_emails.help_text }}</span>
+                    {% endif %}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Scheduled Time</label>
+                    <div class="datetime-line">
+                        <span class="datetime-label">Date:</span>
+                        <input type="date" class="form-control datetime-input" name="scheduled_time_0" id="id_scheduled_time_0">
+                        <span class="datetime-hint">Today</span>
+                        <span class="datetime-icon">📅</span>
+                    </div>
+                    {{ form.scheduled_time.0.errors }}
+
+                    <div class="datetime-line">
+                        <span class="datetime-label">Time:</span>
+                        <input type="time" class="form-control datetime-input" name="scheduled_time_1" id="id_scheduled_time_1">
+                        <span class="datetime-hint">Now</span>
+                        <span class="datetime-icon">🕒</span>
+                    </div>
+                    {{ form.scheduled_time.1.errors }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Platform</label>
+                    {{ form.platform }}
+                    {{ form.platform.errors }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Status</label>
+                    {{ form.status }}
+                    {{ form.status.errors }}
+                </div>
+
+                <div class="mb-3">
+                    <label class="form-label">Meeting Link</label>
+                    {{ form.meeting_link }}
+                    {{ form.meeting_link.errors }}
+                </div>
+
+               
+                <div class="mb-3">
+                    <label class="form-label">Meeting Passcode</label>
+                    {{ form.passcode }}
+                    {{ form.passcode.errors }}
+                </div>
+
+                <button type="submit" class="btn btn-primary">Schedule</button>
+            </form>
+
+            {% if form.errors %}
+                <div class="alert alert-danger mt-3">
+                    Please correct the errors above.
+                </div>
+            {% endif %}
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            const now = new Date();
+            document.getElementById('id_scheduled_time_0').value = now.toISOString().split('T')[0];
+            document.getElementById('id_scheduled_time_1').value =
+                now.getHours().toString().padStart(2, '0') + ':' +
+                now.getMinutes().toString().padStart(2, '0');
+        });
+    </script>
+</body>
+</html>

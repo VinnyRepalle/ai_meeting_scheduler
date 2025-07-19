@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>{{ meeting.title }} Details</title>
+</head>
+<body>
+    <h1>{{ meeting.title }}</h1>
+
+    <p><strong>Description:</strong> {{ meeting.description }}</p>
+    <p><strong>Platform:</strong> {{ meeting.platform }}</p>
+    <p><strong>Scheduled Time:</strong> {{ meeting.scheduled_time }}</p>
+    <p><strong>Meeting Link:</strong>
+        <a href="{{ meeting.meeting_link }}" target="_blank">
+            {{ meeting.meeting_link }}
+        </a>
+    </p>
+
+    <a href="{% url 'meetings:meeting_list' %}">Back to meeting list</a>
+</body>
+</html>
